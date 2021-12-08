@@ -15,7 +15,13 @@ ${UMBRA_LOCATION}/bin/sql --createdb /tmp/umbra-scratch/my.db create-role.sql
 ${UMBRA_LOCATION}/bin/server --address 127.0.0.1 /tmp/scratch/my.db
 ```
 
-Then:
+Try from Python:
+
+```bash
+python3 -c 'import psycopg2; con = psycopg2.connect(host="localhost", user="postgres", password="mysecretpassword", port=5432); cur = con.cursor(); cur.execute("SELECT 42 AS x;"); print(cur.fetchall());'
+```
+
+Try from Java:
 
 ```bash
 mvn compile exec:java -Dexec.mainClass="umbra.Main"
