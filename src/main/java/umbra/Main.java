@@ -1,9 +1,6 @@
 package umbra;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Properties;
 
 public class Main {
@@ -14,10 +11,16 @@ public class Main {
         props.setProperty("user", "postgres");
         props.setProperty("password", "mysecretpassword");
         props.setProperty("ssl",  "false");
+        props.setProperty("preferQueryMode", "simple");
+        props.setProperty("assumeMinServerVersion", "9.0");
         Connection conn = DriverManager.getConnection(url, props);
         Statement statement = conn.createStatement();
         if (statement.execute("SELECT 42 as x;")) {
-            System.out.println(statement.getResultSet());
+            ResultSet resultSet = statement.getResultSet();
+            while (resultSet.next()) {
+                int res = resultSet.getInt(1);
+                System.out.println(res);
+            }
         }
     }
 
